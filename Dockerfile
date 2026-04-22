@@ -1,10 +1,11 @@
-## Use `docker compose up --build` to spin up this job,
-## which regenerates `boost_subset.tar.xz` and an unpacked `boost_subset/`
-## tree in the working directory via Boost's bcp tool.
+## Use `docker compose up --build` to regenerate `boost.tar.xz` in the
+## working directory, via Boost's bcp tool. Then:
+##   rm -rf boost && tar -xJf boost.tar.xz
+## to refresh the unpacked `boost/` tree.
 ##
-## Bump the boost version below and the `bcp` header list to adjust the
-## subset. Commit the regenerated artifacts and tag a release; CoolProp
-## (and any other consumer) pins the tag via CPM.
+## Bump the boost version below and the `bcp` argument list to adjust the
+## subset. Commit the regenerated tree and tag a release; CoolProp (and
+## any other consumer) pins the tag via CPM.
 
 FROM ubuntu:24.04
 
@@ -43,6 +44,7 @@ RUN mkdir /out && \
         boost/version.hpp \
         math/tools/toms748_solve.hpp \
         boost/numeric/odeint.hpp \
+        typeof \
         /out && \
     cd /out && tar cJf /boost.tar.xz boost
 
