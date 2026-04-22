@@ -1,4 +1,4 @@
-# boost-subset
+# boost-headers
 
 A minimal subset of [Boost](https://www.boost.org/) headers used by CoolProp
 and related projects (teqp, superancillary). Extracted with Boost's
@@ -9,12 +9,12 @@ Pin via CPM:
 
 ```cmake
 CPMAddPackage(
-  NAME boost_subset
-  GIT_REPOSITORY https://github.com/CoolProp/boost-subset.git
-  GIT_TAG        <tag>
+  NAME boost_headers
+  GIT_REPOSITORY https://github.com/CoolProp/boost-headers.git
+  GIT_TAG        <sha-or-tag>
   DOWNLOAD_ONLY  YES
 )
-include_directories("${boost_subset_SOURCE_DIR}")
+include_directories("${boost_headers_SOURCE_DIR}")
 ```
 
 ## What's included
