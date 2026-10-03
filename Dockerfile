@@ -1,7 +1,7 @@
 ## Use `docker compose up --build` to regenerate `boost.tar.xz` in the
 ## working directory, via Boost's bcp tool. Then:
-##   rm -rf boost && tar -xJf boost.tar.xz
-## to refresh the unpacked `boost/` tree.
+##   rm -rf boost libs && tar -xJf boost.tar.xz
+## to refresh the unpacked `boost/` and `libs/` trees.
 ##
 ## Bump the boost version below and the `bcp` argument list to adjust the
 ## subset. Commit the regenerated tree and tag a release; CoolProp (and
@@ -45,7 +45,9 @@ RUN mkdir /out && \
         math/tools/toms748_solve.hpp \
         boost/numeric/odeint.hpp \
         typeof \
+        boost/charconv/from_chars.hpp \
+        libs/charconv/src/from_chars.cpp \
         /out && \
-    cd /out && tar cJf /boost.tar.xz boost
+    cd /out && tar cJf /boost.tar.xz boost libs/charconv/src
 
 CMD cp /boost.tar.xz /output/

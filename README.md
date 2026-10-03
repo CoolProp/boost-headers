@@ -25,7 +25,16 @@ The `bcp` header list lives in `Dockerfile`. Current set covers:
 - `boost::numeric::odeint` (ODE integration)
 - `boost::variant`, `boost::optional`, `boost::operators`
 - `boost::utility::string_ref` / `string_view`
+- `boost::charconv::from_chars` (locale-independent number parsing)
 - Supporting `boost::fusion`, `boost::mpl`, `boost::preprocessor`, `boost::predef`
+
+## Compiled sources
+
+Boost.CharConv is not header-only for floating point. Its sources are kept
+under `libs/charconv/src/`, and consumers that call the floating-point
+`from_chars` must compile `libs/charconv/src/from_chars.cpp` themselves and
+define `BOOST_CHARCONV_NO_LIB` wherever they include the header, so that MSVC
+does not try to auto-link a separately built `boost_charconv` library.
 
 ## Regenerating
 
@@ -33,10 +42,10 @@ Requires Docker.
 
 ```
 docker compose up --build
-rm -rf boost && tar -xJf boost.tar.xz
+rm -rf boost libs && tar -xJf boost.tar.xz
 ```
 
-unpacks a fresh `boost/` tree at the repo root. Commit the result and tag
+unpacks fresh `boost/` and `libs/` trees at the repo root. Commit the result and tag
 a new release; downstream projects bump their CPM `GIT_TAG` to pick it up.
 
 To add new headers, append them to the `bcp` invocation in `Dockerfile`
@@ -49,7 +58,7 @@ Bump the arg and regenerate to upgrade.
 
 ## License
 
-The headers under `boost/` are distributed under the
+The headers under `boost/` and the sources under `libs/` are distributed under the
 [Boost Software License 1.0](https://www.boost.org/LICENSE_1_0.txt), a copy
 of which is provided in `LICENSE`. The `Dockerfile`, `docker-compose.yml`,
 and this `README.md` are contributed to the public domain.
