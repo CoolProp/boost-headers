@@ -32,9 +32,10 @@ The `bcp` header list lives in `Dockerfile`. Current set covers:
 
 Boost.CharConv is not header-only for floating point. Its sources are kept
 under `libs/charconv/src/`, and consumers that call the floating-point
-`from_chars` must compile `libs/charconv/src/from_chars.cpp` themselves and
-define `BOOST_CHARCONV_NO_LIB` wherever they include the header, so that MSVC
-does not try to auto-link a separately built `boost_charconv` library.
+`from_chars` must compile `libs/charconv/src/from_chars.cpp` themselves.
+Define `BOOST_CHARCONV_SOURCE` in that translation unit, as Boost's own build
+does, and `BOOST_CHARCONV_NO_LIB` wherever else the header is included.
+Otherwise MSVC tries to auto-link a separately built `boost_charconv` library.
 
 ## Regenerating
 
